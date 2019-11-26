@@ -1,27 +1,38 @@
 import React from "react";
-import { StyleSheet, View, Image } from "react-native";
-import { Text } from "react-native-elements";
+import { createAppContainer } from "react-navigation";
+import { createBottomTabNavigator } from "react-navigation-tabs";
+import { Ionicons } from "@expo/vector-icons";
 
-import BananaImage from "./assets/banana.jpg";
+import HomeScreen from "./HomeScreen";
+import LeaderboardScreen from "./LeaderboardScreen";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text h1>Tap'n'Play</Text>
-      <Image
-        source={BananaImage}
-        style={{ width: "50%" }}
-        resizeMode="contain"
-      />
-    </View>
-  );
-}
+const HOME = "Home";
+const LEADERBOARD = "Leaderboard";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
+const TabNavigator = createBottomTabNavigator(
+  {
+    [HOME]: HomeScreen,
+    [LEADERBOARD]: LeaderboardScreen
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+        const { routeName } = navigation.state;
+        const iconName =
+          routeName === HOME
+            ? "md-home"
+            : routeName === LEADERBOARD
+            ? "md-medal"
+            : "md-more";
+
+        return <Ionicons name={iconName} size={25} color={tintColor} />;
+      }
+    }),
+    tabBarOptions: {
+      activeTintColor: "tomato",
+      inactiveTintColor: "gray"
+    }
   }
-});
+);
+
+export default createAppContainer(TabNavigator);
