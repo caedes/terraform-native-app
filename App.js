@@ -4,18 +4,15 @@ import { createBottomTabNavigator } from "react-navigation-tabs";
 import { Ionicons } from "@expo/vector-icons";
 
 import HomeScreen from "./HomeScreen";
-import LeaderboardScreen from "./LeaderboardScreen";
+import LeaderboardNavigator from "./LeaderboardNavigator";
 import GameScreen from "./GameScreen";
-
-const HOME = "Home";
-const LEADERBOARD = "Leaderboard";
-const GAME = "Game";
+import { GAME, HOME, LEADERBOARD } from "./routes";
 
 const TabNavigator = createBottomTabNavigator(
   {
     [HOME]: HomeScreen,
     [GAME]: GameScreen,
-    [LEADERBOARD]: LeaderboardScreen
+    [LEADERBOARD]: LeaderboardNavigator
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
