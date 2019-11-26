@@ -5,13 +5,16 @@ import { Ionicons } from "@expo/vector-icons";
 
 import HomeScreen from "./HomeScreen";
 import LeaderboardScreen from "./LeaderboardScreen";
+import GameScreen from "./GameScreen";
 
 const HOME = "Home";
 const LEADERBOARD = "Leaderboard";
+const GAME = "Game";
 
 const TabNavigator = createBottomTabNavigator(
   {
     [HOME]: HomeScreen,
+    [GAME]: GameScreen,
     [LEADERBOARD]: LeaderboardScreen
   },
   {
@@ -23,6 +26,8 @@ const TabNavigator = createBottomTabNavigator(
             ? "md-home"
             : routeName === LEADERBOARD
             ? "md-medal"
+            : routeName === GAME
+            ? "logo-game-controller-b"
             : "md-more";
 
         return <Ionicons name={iconName} size={25} color={tintColor} />;
