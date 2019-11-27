@@ -1,13 +1,9 @@
 import React from "react";
 import { StyleSheet, View, Image } from "react-native";
-import { Text } from "react-native-elements";
+import { WebView } from "react-native-webview";
 
-export default function LeaderboardScreen() {
-  return (
-    <View style={styles.container}>
-      <Text h1>Cdiscount</Text>
-    </View>
-  );
+export default function CdiscountScreen() {
+  return <WebView source={{ uri: "https://cdiscount.com" }} />;
 }
 
 const styles = StyleSheet.create({
