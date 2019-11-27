@@ -1,12 +1,12 @@
 import { Button, Text } from "react-native-elements";
-import { FlatList, Platform, View } from "react-native";
+import { FlatList, Platform, ActivityIndicator } from "react-native";
 import { ListItem } from "react-native-elements";
 import capitalize from "capitalize";
 import React from "react";
 import useFetchData from "use-fetch-data";
 import { fetchLeaderboard } from "terraform-http-client";
 import { splitAt } from "ramda";
-import { isNotNilOrEmpty } from "ramda-adjunct";
+import { isNilOrEmpty, isNotNilOrEmpty } from "ramda-adjunct";
 
 import { CDISCOUNT } from "../routes";
 import Screen from "../Screen";
@@ -35,6 +35,18 @@ export default function LeaderboardScreen({ navigation }) {
 
   const deviceVersion = `${capitalize(Platform.OS)} v${Platform.Version}`;
 
+  const renderLeaderboardList = () => (
+    <>
+      {isNotNilOrEmpty(leader) && <Leader {...leader} />}
+      <FlatList
+        style={{ width: "100%" }}
+        data={leaderboard}
+        renderItem={userScore}
+        keyExtractor={extractById}
+      />
+    </>
+  );
+
   return (
     <Screen title="Leaderboard">
       <LeaderboardHeader>
@@ -45,13 +57,11 @@ export default function LeaderboardScreen({ navigation }) {
           onPress={goToCdiscountScreen}
         />
       </LeaderboardHeader>
-      {isNotNilOrEmpty(leader) && <Leader {...leader} />}
-      <FlatList
-        style={{ width: "100%" }}
-        data={leaderboard}
-        renderItem={userScore}
-        keyExtractor={extractById}
-      />
+      {isNilOrEmpty(leaderboardData) ? (
+        <ActivityIndicator size="large" />
+      ) : (
+        renderLeaderboardList()
+      )}
     </Screen>
   );
 }
