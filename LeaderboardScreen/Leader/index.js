@@ -1,7 +1,12 @@
 import React from "react";
 import { ListItem } from "react-native-elements";
+import { merge } from "ramda";
+import { string, number } from "prop-types";
 
-export default function Leader({ avatar, name }) {
+const fontStyle = { color: "white" };
+const emFontStyle = merge(fontStyle, { fontWeight: "bold" });
+
+export default function Leader({ avatar, name, score }) {
   return (
     <ListItem
       linearGradientProps={{
@@ -11,10 +16,22 @@ export default function Leader({ avatar, name }) {
       }}
       leftAvatar={{ source: { uri: avatar } }}
       title={name}
-      titleStyle={{ color: "white", fontWeight: "bold" }}
-      subtitleStyle={{ color: "white" }}
+      titleStyle={emFontStyle}
+      rightTitle={String(score)}
+      rightTitleStyle={emFontStyle}
+      subtitleStyle={fontStyle}
       subtitle="Leader"
       style={{ width: "100%" }}
     />
   );
 }
+
+Leader.propTypes = {
+  avatar: string,
+  name: string.isRequired,
+  score: number.isRequired
+};
+
+Leader.defaultProps = {
+  avatar: null
+};

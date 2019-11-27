@@ -6,6 +6,7 @@ import React from "react";
 import useFetchData from "use-fetch-data";
 import { fetchLeaderboard } from "terraform-http-client";
 import { splitAt } from "ramda";
+import { isNotNilOrEmpty } from "ramda-adjunct";
 
 import { CDISCOUNT } from "../routes";
 import Screen from "../Screen";
@@ -44,7 +45,7 @@ export default function LeaderboardScreen({ navigation }) {
           onPress={goToCdiscountScreen}
         />
       </LeaderboardHeader>
-      <Leader avatar={leader.avatar} name={leader.name} />
+      {isNotNilOrEmpty(leader) && <Leader {...leader} />}
       <FlatList
         style={{ width: "100%" }}
         data={leaderboard}
