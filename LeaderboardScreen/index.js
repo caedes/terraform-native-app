@@ -5,10 +5,12 @@ import capitalize from "capitalize";
 import React from "react";
 import useFetchData from "use-fetch-data";
 import { fetchLeaderboard } from "terraform-http-client";
+import { splitAt } from "ramda";
 
 import { CDISCOUNT } from "../routes";
 import Screen from "../Screen";
 import { LeaderboardHeader } from "./styles";
+import Leader from "./Leader";
 
 const userScore = ({ item }) => (
   <ListItem
@@ -23,6 +25,8 @@ const extractById = item => String(item.id);
 
 export default function LeaderboardScreen({ navigation }) {
   const leaderboardData = useFetchData(fetchLeaderboard, []);
+
+  const [[leader = {}], leaderboard] = splitAt(1, leaderboardData);
 
   const goToCdiscountScreen = () => {
     navigation.navigate(CDISCOUNT);
@@ -40,9 +44,10 @@ export default function LeaderboardScreen({ navigation }) {
           onPress={goToCdiscountScreen}
         />
       </LeaderboardHeader>
+      <Leader avatar={leader.avatar} name={leader.name} />
       <FlatList
         style={{ width: "100%" }}
-        data={leaderboardData}
+        data={leaderboard}
         renderItem={userScore}
         keyExtractor={extractById}
       />
