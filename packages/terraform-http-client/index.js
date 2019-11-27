@@ -1,4 +1,4 @@
-const domain = "//fake-terraform-api.herokuapp.com";
+const domain = "https://fake-terraform-api.herokuapp.com";
 
 const responseToJson = response => response.json();
 const headers = {
@@ -18,4 +18,8 @@ export function fetchProjects() {
 
 export function fetchProject(projectId) {
   return fetch(`${domain}/projects/${projectId}`, options).then(responseToJson);
+}
+
+export function fetchLeaderboard() {
+  return fetch(`${domain}/leaderboard`, options).then(responseToJson);
 }
